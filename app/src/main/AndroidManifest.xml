@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vincentj.keepingaliveproject">
+
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <service
+            android:name=".stickyservice.StickyService"
+            android:enabled="false"
+            android:exported="false"></service>
+
+        <activity
+            android:name=".onePiexl.KeepActivity"
+            android:excludeFromRecents="true"
+            android:taskAffinity="com.mg.step.keep"
+            android:theme="@style/KeepStyle" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".service.ForegroundService" />
+        <service android:name=".service.ForegroundService$InnerService" />
+
+        <service android:name=".account.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/account_authenticator" />
+        </service>
+
+        <service android:name=".account.SyncService">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter" />
+        </service>
+        <service
+            android:name=".jobscheduler.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".daemon.LocalService" />
+        <service
+            android:name=".daemon.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".daemon.RemoteService" />
+        <service android:name=".daemon.LocalService$InnnerService" />
+        <service android:name=".daemon.RemoteService$InnnerService" />
+
+        <provider
+            android:name=".account.SyncProvider"
+            android:authorities="com.98du.step.provider" />
+    </application>
+
+</manifest>
