@@ -22,11 +22,12 @@
         <service
             android:name=".stickyservice.StickyService"
             android:enabled="false"
-            android:exported="false"></service>
+            android:exported="false"/>
 
         <activity
             android:name=".onePiexl.KeepActivity"
             android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="false"
             android:taskAffinity="com.mg.step.keep"
             android:theme="@style/KeepStyle" />
         <activity android:name=".MainActivity">
@@ -60,17 +61,23 @@
         <service
             android:name=".jobscheduler.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".daemon.LocalService" />
+        <service android:name=".daemon.LocalService"
+            android:process=":local"/>
         <service
-            android:name=".daemon.MyJobService"
+            android:name=".daemon.MyDaemonJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".daemon.RemoteService" />
+        <service android:name=".daemon.RemoteService"
+            android:process=":remote"/>
         <service android:name=".daemon.LocalService$InnnerService" />
         <service android:name=".daemon.RemoteService$InnnerService" />
-
         <provider
             android:name=".account.SyncProvider"
             android:authorities="com.98du.step.provider" />
+        <!--无声音乐-->
+        <service android:name=".silentmusic.PlayerMusicService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":music_service"/>
     </application>
 
 </manifest>

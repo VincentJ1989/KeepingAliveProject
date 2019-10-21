@@ -25,16 +25,6 @@ object KeepManager {
     }
 
     /**
-     * 反注册
-     * @param context
-     */
-    fun unregisterKeep(context: Context) {
-        if (mKeepReceiver != null) {
-            context.unregisterReceiver(mKeepReceiver)
-        }
-    }
-
-    /**
      * 开启1像素Activity
      * @param context
      */
@@ -42,6 +32,16 @@ object KeepManager {
         val intent = Intent(context, KeepActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
+    }
+
+    /**
+     * 反注册
+     * @param context
+     */
+    fun unregisterKeep(context: Context) {
+        if (mKeepReceiver != null) {
+            context.unregisterReceiver(mKeepReceiver)
+        }
     }
 
     /**

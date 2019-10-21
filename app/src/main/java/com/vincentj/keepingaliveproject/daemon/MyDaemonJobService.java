@@ -1,5 +1,7 @@
 package com.vincentj.keepingaliveproject.daemon;
 
+import java.util.List;
+
 import android.app.ActivityManager;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -12,22 +14,14 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.util.List;
-
-public class MyJobService extends JobService {
-    private static final String TAG = "MyJobService";
+public class MyDaemonJobService extends JobService {
+    private static final String TAG = "MyDaemonJobService";
 
     public static void startJob(Context context) {
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         JobInfo.Builder builder =
-                new JobInfo.Builder(10, new ComponentName(context.getPackageName(), MyJobService.class.getName()))
+                new JobInfo.Builder(10, new ComponentName(context.getPackageName(), MyDaemonJobService.class.getName()))
                         .setPersisted(true);
-        /**
-         * I was having this problem and after review some blogs and the official documentation,
-         * I realised that JobScheduler is having difference behavior on Android N(24 and 25).
-         * JobScheduler works with a minimum periodic of 15 mins.
-         *
-         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // 7.0以上延迟1s执行
             builder.setMinimumLatency(1000);
